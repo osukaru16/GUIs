@@ -1,10 +1,12 @@
 package org.appgrafica;
 
-import java.awt.*;
+
 import java.awt.event.*;
 import javax.swing.*;
 
 import javax.swing.border.EmptyBorder;
+
+import org.appgrafica.motor.EscrituraTXT;
 
 
 public class Ventana extends JFrame {
@@ -16,21 +18,22 @@ public class Ventana extends JFrame {
 	private JButton botonNeteja = new JButton("Netejar");
 	private JButton botonSalir = new JButton("Sortir");
 	
-	private JCheckBox JCB_estudiant = new JCheckBox("Estudiant");
-	private JCheckBox JCB_atur = new JCheckBox("Està en el atur");
-	private JCheckBox JCB_treballador = new JCheckBox("Treballador");
-	private JCheckBox JCB_sexe = new JCheckBox("Sexe");
-	private JComboBox<String> JC_sexe = new JComboBox<String>();
+	private JCheckBox jcb_estudiant = new JCheckBox("Estudiant");
+	private JCheckBox jcb_atur = new JCheckBox("Esta en el atur");
+	private JCheckBox jcb_treballador = new JCheckBox("Treballador");
+	private JCheckBox jcb_sexe = new JCheckBox("Sexe");
+	private JComboBox<String> jc_sexe = new JComboBox<String>();
+	
+	
+	private EscrituraTXT escribe = new EscrituraTXT();
+	private String path = "Estat Solicitants.txt";
+	private int contadorRegistro = 0;
 	
 	
 	
 	
 	
-	
-	
-	
-	
-	
+
 	
 	
 	public Ventana() {
@@ -51,6 +54,10 @@ public class Ventana extends JFrame {
 	
 	
 	private void jbInit() throws Exception {
+		escribe.setPath(path);
+		
+		
+		
 		this.setDefaultCloseOperation( Ventana.EXIT_ON_CLOSE );
 		 //this.getContentPane().add( new Ventana(),BorderLayout.CENTER );
 		 //this.setSize( 1000,1000 );
@@ -70,13 +77,13 @@ public class Ventana extends JFrame {
 		
 		
 		
-		JCB_estudiant.setBounds(11, 40, 97, 29);
-		this.getContentPane().add(JCB_estudiant);
+		jcb_estudiant.setBounds(11, 40, 97, 29);
+		this.getContentPane().add(jcb_estudiant);
 		
 		 
 		
-		JCB_atur.setBounds(11, 90, 126, 45);
-		this.getContentPane().add(JCB_atur);
+		jcb_atur.setBounds(11, 90, 126, 45);
+		this.getContentPane().add(jcb_atur);
 		
 		
 		
@@ -84,21 +91,21 @@ public class Ventana extends JFrame {
 		 
 		 
 		
-		JCB_treballador.setBounds(11, 150, 97, 29);
-		this.getContentPane().add(JCB_treballador);
+		jcb_treballador.setBounds(11, 150, 97, 29);
+		this.getContentPane().add(jcb_treballador);
 		
 		
 		
 		
 		
-		JCB_sexe.setBounds(11, 210, 97, 29);
-		this.getContentPane().add(JCB_sexe);
+		jcb_sexe.setBounds(11, 210, 97, 29);
+		this.getContentPane().add(jcb_sexe);
 		
 		
-		JC_sexe.setBounds(110, 210, 97, 29);
-		this.getContentPane().add(JC_sexe);
-		JC_sexe.setModel(new DefaultComboBoxModel(new String[]{"Home","Dona"}));
-		JC_sexe.setVisible(false);
+		jc_sexe.setBounds(110, 210, 97, 29);
+		this.getContentPane().add(jc_sexe);
+		jc_sexe.setModel(new DefaultComboBoxModel<String>(new String[]{"Home","Dona"}));
+		jc_sexe.setVisible(false);
 		
 		
 		
@@ -131,37 +138,37 @@ public class Ventana extends JFrame {
 
 		
 		
-		JCB_estudiant.addActionListener(new ActionListener() {
+		jcb_estudiant.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	JCB_atur.setSelected(false);
-				JCB_treballador.setSelected(false);
+            	jcb_atur.setSelected(false);
+				jcb_treballador.setSelected(false);
             }
         });
 		
 		
-		JCB_atur.addActionListener(new ActionListener() {
+		jcb_atur.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	JCB_estudiant.setSelected(false);
-				JCB_treballador.setSelected(false);
+            	jcb_estudiant.setSelected(false);
+				jcb_treballador.setSelected(false);
             }
         });
 		
-		JCB_treballador.addActionListener(new ActionListener() {
+		jcb_treballador.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	JCB_atur.setSelected(false);
-				JCB_estudiant.setSelected(false);
+            	jcb_atur.setSelected(false);
+				jcb_estudiant.setSelected(false);
             }
         });
 		 
 		
 		
-		JCB_sexe.addActionListener(new ActionListener() {
+		jcb_sexe.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	if(JCB_sexe.isSelected()){
-            		JC_sexe.setVisible(true);
+            	if(jcb_sexe.isSelected()){
+            		jc_sexe.setVisible(true);
             	}
             	else{
-            		JC_sexe.setVisible(false);
+            		jc_sexe.setVisible(false);
             	}
             }
         });
@@ -174,11 +181,11 @@ public class Ventana extends JFrame {
 		
 		botonNeteja.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	JCB_atur.setSelected(false);
-				JCB_estudiant.setSelected(false);
-				JCB_treballador.setSelected(false);
-				JCB_sexe.setSelected(false);
-            	JC_sexe.setVisible(false);
+            	jcb_atur.setSelected(false);
+				jcb_estudiant.setSelected(false);
+				jcb_treballador.setSelected(false);
+				jcb_sexe.setSelected(false);
+            	jc_sexe.setVisible(false);
             }
         });
 		
@@ -189,6 +196,7 @@ public class Ventana extends JFrame {
 		
 		botonSalir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	escribe.guardado();
             	System.exit(0);
             }
         });
@@ -196,7 +204,23 @@ public class Ventana extends JFrame {
 		
 		
 		
-		
+		botonAcep.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	String ocupacion ="";
+            	if(jcb_atur.isSelected()){
+            		ocupacion = jcb_atur.getText();
+            	}
+            	else if(jcb_estudiant.isSelected()){
+            		ocupacion = jcb_estudiant.getText();
+            	}
+            	else if(jcb_treballador.isSelected()){
+            		ocupacion = jcb_treballador.getText();
+            	}
+            	
+            	contadorRegistro++;
+            	escribe.setTexto(contadorRegistro+" "+jc_sexe.getSelectedItem().toString()+" "+ocupacion);
+            }
+        });
 		
 		
 		
